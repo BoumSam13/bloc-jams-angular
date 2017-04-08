@@ -78,6 +78,7 @@
         */
         SongPlayer.currentSong = null;
         SongPlayer.currentTime = null;
+        SongPlayer.volume = 100;
         SongPlayer.artist = null;
         SongPlayer.title = null;
         SongPlayer.totalTime = null;
@@ -146,6 +147,12 @@
                  currentBuzzObject.setTime(time);
              }
          };
+         
+         SongPlayer.setVolume = function(volume) {
+             if (currentBuzzObject) {
+                 currentBuzzObject.setVolume(volume);
+             }
+         }
 
         return SongPlayer;
      }
