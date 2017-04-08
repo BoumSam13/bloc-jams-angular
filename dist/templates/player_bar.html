@@ -24,14 +24,16 @@
              <h3 class="artist-name">{{ playerBar.songPlayer.artist }}</h3>
              <div class="seek-control">
                  <div class="seek-bar">
-                     <div class="fill"></div>
-                     <div class="thumb"></div>
+                     <seek-bar></seek-bar>
                  </div>
                  <div class="current-time"></div>
                  <div class="total-time">{{ playerBar.songPlayer.totalTime }}</div>
              </div>
          </div>
-         <seek-bar></seek-bar>
+         <div class="control-group volume">
+            <span class="icon ion-volume-high"></span>
+                <seek-bar></seek-bar>
+         </div>
      </div>
  </section>
 
