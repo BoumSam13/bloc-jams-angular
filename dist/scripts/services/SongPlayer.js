@@ -1,6 +1,7 @@
 (function() {
      function SongPlayer(Fixtures) {
         var SongPlayer = {};
+        var currentAlbum = Fixtures.getAlbum();
         var currentAlbumSongs = Fixtures.getAlbumSongs();
         /**
         * @desc Buzz object audio file
@@ -29,6 +30,17 @@
          var playSong = function(song) {
              currentBuzzObject.play();
              song.playing = true;
+             SongPlayer.artist = getArtist();
+             SongPlayer.title = SongPlayer.currentSong.title;
+             SongPlayer.totalTime = SongPlayer.currentSong.duration;
+         };
+         
+         var stopSong = function(song) {
+             currentBuzzObject.stop();
+             SongPlayer.currentSong.playing = null;
+             SongPlayer.artist = null;
+             SongPlayer.title = null;
+             SongPlayer.totalTime = null;
          };
          
          /** @function getSongIndex
@@ -43,10 +55,24 @@
              return aSong.indexOf(albumSong);
          };
          
+         var getTotalNumberOfSongs = function() {
+             for (var song in currentAlbumSongs) {
+                 var songTotal = song;
+             }
+             return songTotal;
+         }
+         
+        var getArtist = function() {
+             return currentAlbum[0].artist;
+         };
+         
         /** @desc current song
         * @type {Object}
         */
         SongPlayer.currentSong = null;
+        SongPlayer.artist = null;
+        SongPlayer.title = null;
+        SongPlayer.totalTime = null;
          
         SongPlayer.play = function(song) {
             song = song || SongPlayer.currentSong
@@ -79,14 +105,28 @@
             currentSongIndex--;
             
             if (currentSongIndex < 0) {
-                currentBuzzObject.stop();
-                SongPlayer.currentSong.playing = null;
+                stopSong(song);
             } else {
                 var song = currentAlbumSongs[currentSongIndex];
                 setSong(song);
                 playSong(song);
             }
         };
+        
+        SongPlayer.next = function() {
+            var numSongs = getTotalNumberOfSongs();
+            var currentSongIndex = getSongIndex(SongPlayer.currentSong.title);
+            currentSongIndex++;
+            
+            if (currentSongIndex > numSongs)
+            {
+                stopSong(song);
+            } else {
+                var song = currentAlbumSongs[currentSongIndex];
+                setSong(song);
+                playSong(song);
+            }
+        }
 
         return SongPlayer;
      }
